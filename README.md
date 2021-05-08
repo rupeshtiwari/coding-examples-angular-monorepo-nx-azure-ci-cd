@@ -4,11 +4,19 @@
 ```
 nx serve --port=4201 cutepuppies-admin
 ```   
+
+Visit: http://localhost:4200/puppies-editor 
+
+![](https://imgur.com/5cBHLmF.png)
+
 ### Run client app
 ```
 nx serve --port=4201 cutepuppies-client
 ``` 
 
+Visit: http://localhost:4201/puppies
+
+![](https://imgur.com/SuCGZDF.png)
 
 
 This project was generated using [Nx](https://nx.dev).
