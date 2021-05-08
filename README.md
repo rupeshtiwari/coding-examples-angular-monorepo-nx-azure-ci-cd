@@ -1,4 +1,15 @@
-# Myorg
+# Sample Mono repo project 
+
+### Run admin app
+```
+nx serve --port=4201 cutepuppies-admin
+```   
+### Run client app
+```
+nx serve --port=4201 cutepuppies-client
+``` 
+
+
 
 This project was generated using [Nx](https://nx.dev).
 

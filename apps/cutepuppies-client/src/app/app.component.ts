@@ -6,7 +6,7 @@ import { LoggingService } from '@myorg/branding-logger';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Puppies';
+  title = 'Puppies CLIENT Portal';
   constructor(private loggingService: LoggingService) {
     this.loggingService.log(`welcome to puppies page`);
   }
