@@ -1,23 +1,31 @@
-# Sample Mono repo project 
+![](https://imgur.com/jQBJAFC.png)
+
+# MonoRepo Sample repo using Nx library
+
+> This repo is created to demonstrate **nx monorepo CI/CD using Azure Devops Pipeline**.
 
 ### Run admin app
+
 ```
 nx serve --port=4201 cutepuppies-admin
-```   
+```
 
-Visit: http://localhost:4200/puppies-editor 
+Visit: http://localhost:4200/puppies-editor
 
 ![](https://imgur.com/5cBHLmF.png)
 
 ### Run client app
+
 ```
 nx serve --port=4201 cutepuppies-client
-``` 
+```
 
 Visit: http://localhost:4201/puppies
 
 ![](https://imgur.com/SuCGZDF.png)
 
+
+## Nx 
 
 This project was generated using [Nx](https://nx.dev).
 
