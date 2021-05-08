@@ -1,0 +1,54 @@
+{
+  "npmScope": "myorg",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "branding-logger": {
+      "tags": ["scope:branding", "type:branding-logger"]
+    },
+    "cutepuppies-admin": {
+      "tags": ["scope:itops", "type:itops-cutepuppies-admin"]
+    },
+    "cutepuppies-client": {
+      "tags": ["scope:itops", "type:itops-cutepuppies-client"]
+    },
+    "sales-puppy-editor": {
+      "tags": ["scope:sales", "type:sales-puppy-editor"]
+    },
+    "sales-puppies": {
+      "tags": ["scope:sales", "type:sales-puppies"]
+    },
+    "branding-ngmaterial": {
+      "tags": ["scope:branding", "type:branding-ngmaterial"]
+    },
+    "customers-users": {
+      "tags": ["scope:customers", "type:customers-users"]
+    },
+    "branding-ckeditor": {
+      "tags": ["scope:branding", "type:branding-ckeditor"]
+    },
+    "branding-editor": {
+      "tags": ["scope:branding", "type:branding-editor"]
+    }
+  }
+}

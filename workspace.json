@@ -1,0 +1,452 @@
+{
+  "version": 2,
+  "projects": {
+    "branding-logger": {
+      "projectType": "library",
+      "root": "libs/branding/logger",
+      "sourceRoot": "libs/branding/logger/src",
+      "prefix": "myorg",
+      "targets": {
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/branding/logger/tsconfig.lib.json",
+              "libs/branding/logger/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/branding/logger/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "libs/branding/logger/src/test.ts",
+              "libs/branding/logger/src/polyfills.ts"
+            ],
+            "main": "libs/branding/logger/src/test.ts",
+            "tsConfig": "libs/branding/logger/tsconfig.spec.json",
+            "karmaConfig": "libs/branding/logger/karma.conf.js"
+          }
+        }
+      }
+    },
+    "cutepuppies-admin": {
+      "projectType": "application",
+      "root": "apps/cutepuppies-admin",
+      "sourceRoot": "apps/cutepuppies-admin/src",
+      "prefix": "myorg",
+      "targets": {
+        "build": {
+          "executor": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/cutepuppies-admin",
+            "index": "apps/cutepuppies-admin/src/index.html",
+            "main": "apps/cutepuppies-admin/src/main.ts",
+            "polyfills": "apps/cutepuppies-admin/src/polyfills.ts",
+            "tsConfig": "apps/cutepuppies-admin/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/cutepuppies-admin/src/favicon.ico",
+              "apps/cutepuppies-admin/src/assets",
+              "apps/cutepuppies-admin/src/package.json",
+              "apps/cutepuppies-admin/src/.npmrc"
+            ],
+            "styles": [
+              "apps/cutepuppies-admin/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/cutepuppies-admin/src/environments/environment.ts",
+                  "with": "apps/cutepuppies-admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cutepuppies-admin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cutepuppies-admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "executor": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cutepuppies-admin:build"
+          }
+        },
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/cutepuppies-admin/tsconfig.app.json",
+              "apps/cutepuppies-admin/tsconfig.spec.json",
+              "apps/cutepuppies-admin/tsconfig.editor.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cutepuppies-admin/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "apps/cutepuppies-admin/src/test.ts",
+              "apps/cutepuppies-admin/src/polyfills.ts"
+            ],
+            "main": "apps/cutepuppies-admin/src/test.ts",
+            "tsConfig": "apps/cutepuppies-admin/tsconfig.spec.json",
+            "karmaConfig": "apps/cutepuppies-admin/karma.conf.js",
+            "polyfills": "apps/cutepuppies-admin/src/polyfills.ts",
+            "styles": [],
+            "scripts": [],
+            "assets": []
+          }
+        }
+      }
+    },
+    "cutepuppies-client": {
+      "projectType": "application",
+      "root": "apps/cutepuppies-client",
+      "sourceRoot": "apps/cutepuppies-client/src",
+      "prefix": "client",
+      "targets": {
+        "build": {
+          "executor": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/cutepuppies-client",
+            "index": "apps/cutepuppies-client/src/index.html",
+            "main": "apps/cutepuppies-client/src/main.ts",
+            "polyfills": "apps/cutepuppies-client/src/polyfills.ts",
+            "tsConfig": "apps/cutepuppies-client/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/cutepuppies-client/src/favicon.ico",
+              "apps/cutepuppies-client/src/assets",
+              "apps/cutepuppies-client/src/package.json",
+              "apps/cutepuppies-client/src/.npmrc"
+            ],
+            "styles": [
+              "apps/cutepuppies-client/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/cutepuppies-client/src/environments/environment.ts",
+                  "with": "apps/cutepuppies-client/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cutepuppies-client:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cutepuppies-client:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "executor": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cutepuppies-client:build"
+          }
+        },
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/cutepuppies-client/tsconfig.app.json",
+              "apps/cutepuppies-client/tsconfig.spec.json",
+              "apps/cutepuppies-client/tsconfig.editor.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cutepuppies-client/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "apps/cutepuppies-client/src/test.ts",
+              "apps/cutepuppies-client/src/polyfills.ts"
+            ],
+            "main": "apps/cutepuppies-client/src/test.ts",
+            "tsConfig": "apps/cutepuppies-client/tsconfig.spec.json",
+            "karmaConfig": "apps/cutepuppies-client/karma.conf.js",
+            "polyfills": "apps/cutepuppies-client/src/polyfills.ts",
+            "styles": [],
+            "scripts": [],
+            "assets": []
+          }
+        }
+      }
+    },
+    "sales-puppy-editor": {
+      "projectType": "library",
+      "root": "libs/sales/puppy-editor",
+      "sourceRoot": "libs/sales/puppy-editor/src",
+      "prefix": "myorg",
+      "targets": {
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/sales/puppy-editor/tsconfig.lib.json",
+              "libs/sales/puppy-editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/sales/puppy-editor/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "libs/sales/puppy-editor/src/test.ts",
+              "libs/sales/puppy-editor/src/polyfills.ts"
+            ],
+            "main": "libs/sales/puppy-editor/src/test.ts",
+            "tsConfig": "libs/sales/puppy-editor/tsconfig.spec.json",
+            "karmaConfig": "libs/sales/puppy-editor/karma.conf.js"
+          }
+        }
+      }
+    },
+    "sales-puppies": {
+      "projectType": "library",
+      "root": "libs/sales/puppies",
+      "sourceRoot": "libs/sales/puppies/src",
+      "prefix": "myorg",
+      "targets": {
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/sales/puppies/tsconfig.lib.json",
+              "libs/sales/puppies/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/sales/puppies/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "libs/sales/puppies/src/test.ts",
+              "libs/sales/puppies/src/polyfills.ts"
+            ],
+            "main": "libs/sales/puppies/src/test.ts",
+            "tsConfig": "libs/sales/puppies/tsconfig.spec.json",
+            "karmaConfig": "libs/sales/puppies/karma.conf.js"
+          }
+        }
+      }
+    },
+    "branding-ngmaterial": {
+      "projectType": "library",
+      "root": "libs/branding/ngmaterial",
+      "sourceRoot": "libs/branding/ngmaterial/src",
+      "prefix": "myorg",
+      "targets": {
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/branding/ngmaterial/tsconfig.lib.json",
+              "libs/branding/ngmaterial/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/branding/ngmaterial/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "libs/branding/ngmaterial/src/test.ts",
+              "libs/branding/ngmaterial/src/polyfills.ts"
+            ],
+            "main": "libs/branding/ngmaterial/src/test.ts",
+            "tsConfig": "libs/branding/ngmaterial/tsconfig.spec.json",
+            "karmaConfig": "libs/branding/ngmaterial/karma.conf.js"
+          }
+        }
+      }
+    },
+    "customers-users": {
+      "projectType": "library",
+      "root": "libs/customers/users",
+      "sourceRoot": "libs/customers/users/src",
+      "prefix": "cu",
+      "targets": {
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/customers/users/tsconfig.lib.json",
+              "libs/customers/users/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/customers/users/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "codeCoverageExclude": [
+              "libs/customers/users/src/test.ts",
+              "libs/customers/users/src/polyfills.ts"
+            ],
+            "main": "libs/customers/users/src/test.ts",
+            "tsConfig": "libs/customers/users/tsconfig.spec.json",
+            "karmaConfig": "libs/customers/users/karma.conf.js"
+          }
+        }
+      }
+    },
+    "branding-ckeditor": {
+      "root": "libs/branding/ckeditor",
+      "sourceRoot": "libs/branding/ckeditor/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/branding/ckeditor/**/*.js"
+            ]
+          }
+        },
+        "build": {
+          "executor": "@nrwl/workspace:run-commands",
+
+          "options": {
+            "outputPath": "libs/branding/ckeditor",
+            "commands": [
+              "npm run build"
+            ],
+            "cwd": "libs/branding/ckeditor/src",
+            "parallel": false
+          }
+        }
+      }
+    },
+    "branding-editor": {
+      "projectType": "library",
+      "root": "libs/branding/editor",
+      "sourceRoot": "libs/branding/editor/src",
+      "prefix": "myorgBranding",
+      "targets": {
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/branding/editor/tsconfig.lib.json",
+              "libs/branding/editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/branding/editor/**/*"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/branding/editor/src/test.ts",
+            "tsConfig": "libs/branding/editor/tsconfig.spec.json",
+            "karmaConfig": "libs/branding/editor/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "karma",
+      "e2eTestRunner": "none"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "karma"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "branding-logger"
+}

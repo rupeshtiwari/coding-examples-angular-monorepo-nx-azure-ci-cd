@@ -1,0 +1,158 @@
+# Trigger CI automatically whenever main branch is changed
+pool:
+  vmImage: 'ubuntu-latest'
+
+trigger:
+  - main
+
+variables:
+  IS_PULLREQUEST: $[eq(variables['Build.Reason'], 'PullRequest')]
+  CAN_SKIP_NX_CACHE: $[eq(variables['CAN_SKIP_NX_CACHE'], 'True')]
+  AUTH_NPMTOKEN: $(NPM_TOKEN)
+
+# Cacheing node_modules folder
+steps:
+  - task: Cache@2
+    displayName: 'Cache Npm Dependencies'
+    inputs:
+      key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+      path: '$(Build.SourcesDirectory)/node_modules'
+      cacheHitVar: 'CacheRestored'
+
+    # Runing NPM CI only install node packages if package-lock.json changed
+  - task: Npm@1
+    displayName: 'NPM CI'
+    inputs:
+      command: ci
+      verbose: false
+    condition: ne(variables['CacheRestored'], 'true')
+
+    # Creating Nx COMMANDS
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=COMMANDS]$(node ./tools/scripts/generate-nx-commands.js $(IS_PULLREQUEST) $(CAN_SKIP_NX_CACHE))"
+    displayName: Creating Nx Commands
+
+    # Displaying Nx Commands
+  - script: echo $(COMMANDS)
+    name: echoCommands
+    displayName: Displaying Nx Commands
+
+    # Linting Projects
+  - script: node ./tools/scripts/run-nx-commands.js '$(COMMANDS)' lint
+    enabled: false
+    displayName: Linting Projects
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+            variables['COMMANDS'],
+            '"lint":[]'
+        ))
+      )
+
+    # Testing Projects
+  - script: node ./tools/scripts/run-nx-commands.js '$(COMMANDS)' test
+    enabled: true
+    displayName: Testing Projects
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+            variables['COMMANDS'],
+            '"test":[]'
+        ))
+      )
+
+    # Publish Test Results
+  - task: PublishTestResults@2
+    enabled: true
+    displayName: Publish Test Results
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/testresults/**/*.xml'
+      mergeTestResults: true
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+            variables['COMMANDS'],
+            '"test":[]'
+        ))
+      )
+
+    # Publish Code Coverage Results
+  - task: PublishCodeCoverageResults@1
+    enabled: true
+    displayName: Publish Code Coverage
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)/coverage/merged/merged-cobertura-coverage.xml'
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+            variables['COMMANDS'],
+            '"test":[]'
+        ))
+      )
+
+    # Building Projects
+  - script: node ./tools/scripts/run-nx-commands.js '$(COMMANDS)' build
+    enabled: true
+    displayName: Building Projects
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+            variables['COMMANDS'],
+            '"build":[]'
+        ))
+      )
+
+  # Update the Patch version of npm package before publishing
+  - script: |
+      export newVersion=$(node ./tools/scripts/update-npm-version.js '$(COMMANDS)' '$(Build.BuildId)')
+      echo "##vso[task.setvariable variable=newVersion]$newVersion"
+    enabled: true
+    displayName: Updating NPM Version
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+          variables['COMMANDS'],
+          '"publish":[]'
+        )),
+        ne(variables['IS_PULLREQUEST'], 'true')
+      )
+
+  # Update Pipeline Build Number
+  - script: |
+      echo "Using npm package version to update pipeline build number"
+      echo "##vso[build.updatebuildnumber]$(newVersion)-$(Build.SourceBranchName)"
+    enabled: true
+    displayName: Update Build Number
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+          variables['COMMANDS'],
+          '"publish":[]'
+        )),
+        ne(variables['IS_PULLREQUEST'], 'true')
+      )
+
+  # If Not Pull Request Then Publish Apps to NPM with new Patch Version
+  - script: |
+      echo "publishing to npm repository"
+      node ./tools/scripts/publish-npm.js '$(COMMANDS)'
+    enabled: true
+    displayName: Publish NPM
+    condition: |
+      and(
+        succeeded(),
+        not(contains(
+          variables['COMMANDS'],
+          '"publish":[]'
+        )),
+        ne(variables['IS_PULLREQUEST'], 'true')
+      )
